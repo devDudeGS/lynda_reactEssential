@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
+import Library from './Library'
 
 // array object with data (typically from database)
 let bookList = [
@@ -8,63 +9,6 @@ let bookList = [
     {"title": "The Art of Learning", "author":"Josh Waitzkin", "pages": 360},
     {"title": "Paddle Your Own Canoe", "author":"Nick Offerman", "pages": 360}
 ]
-
-// child component, implemented in parent
-const Book = ({title, author, pages, freeBookmark}) => {
-    return (
-        <section>
-            <h2>{title}</h2>
-            <p>by {author}</p>
-            <p>Pages: {pages} pages</p>
-            <p>Free Bookmark Today: {freeBookmark ? 'yes!':'no!'}</p>
-        </section>
-    )
-}
-
-const Hiring = () =>
-    <div>
-        <p>The library is hiring. Go to www.library.com/jobs for more.</p>
-    </div>
-
-const NotHiring = () =>
-    <div>
-        <p>The library is not hiring. Check back later for more info.</p>
-    </div>
-
-// parent component with 1+ child components
-class Library extends Component {
-    // src of truth
-    state = {
-        open: true,
-        freeBookmark: true,
-        hiring: true
-    }
-
-    toggleOpenClosed = () => {
-        this.setState(prevState => ({
-            open: !prevState.open
-        }))
-    }
-    render() {
-        console.log(this.state)
-        const { books } = this.props
-        return (
-            <div>
-                {this.state.hiring ? <Hiring /> : <NotHiring />}
-                <h1>The Library is {this.state.open ? 'open' : 'closed'}</h1>
-                <button onClick={this.toggleOpenClosed}>Change</button>
-                {books.map(
-                    (book, i) => <Book
-                        key={i}
-                        title={book.title}
-                        author={book.author}
-                        pages={book.pages}
-                        freeBookmark={this.state.freeBookmark}/>
-                )}
-            </div>
-        )
-    }
-}
 
 // // object
 // let skiData = {
@@ -181,9 +125,35 @@ class Library extends Component {
 //     document.getElementById('root')
 // )
 
+// class FavoriteColorForm extends Component {
+//     state = { value: ''}
+//
+//     newColor = e =>
+//         this.setState({ value: e.target.value })
+//
+//     submit = e => {
+//         console.log(`New Color: ${this.state.value}`)
+//         e.preventDefault()
+//     }
+//
+//     render() {
+//         return (
+//             <form onSubmit={this.submit}>
+//                 <label>Favorite Color:
+//                     <input
+//                         type="color"
+//                         onChange={this.newColor}/>
+//                 </label>
+//                 <button>Submit</button>
+//             </form>
+//         )
+//     }
+// }
+
 render(
     // what?
     <Library books={bookList} />,
+    //<FavoriteColorForm />,
     // where? (this is a div in public > index.html)
     document.getElementById('root')
 )
